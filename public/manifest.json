@@ -1,0 +1,16 @@
+{
+	"short_name": "股票計算機",
+	"name": "股票計算機",
+	"icons": [
+		{
+			"src": "food-app.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		}
+	],
+	"start_url": ".",
+	"display": "standalone",
+	"theme_color": "#000000",
+	"background_color": "#ffffff"
+}

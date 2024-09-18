@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%PUBLIC_URL%/food-app.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#000000" />
+		<meta
+			name="description"
+			content="Web site created using create-react-app"
+		/>
+		<link rel="apple-touch-icon" href="%PUBLIC_URL%/food-app.png" />
+		<!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+		<!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+		<title>口袋餐廳名冊</title>
+	</head>
+	<style>
+		#root {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.input-group,
+		.output-group {
+			width: 48%;
+		}
+	</style>
+	<body>
+		<div id="root">
+			<div class="input-group" style="width: 40%">
+				<p>輸入價格：</p>
+				<textarea id="price"></textarea>
+				<p>輸入股數：</p>
+				<textarea id="number"></textarea>
+				<p><br /></p>
+				<button onclick="cal()">計算手續費</button>
+			</div>
+			<div class="output-group">
+				<p>獲利價格：</p>
+				<textarea id="worthprice"></textarea>
+				<p>手續費：</p>
+				<textarea id="fee"></textarea>
+				<p>總成本：</p>
+				<textarea id="cost"></textarea>
+				<p>總收入：</p>
+				<textarea id="income"></textarea>
+			</div>
+		</div>
+
+		<!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    --></body>
+	<script>
+		function cal() {
+			let price = parseFloat(document.getElementById("price").value);
+			let number = parseInt(document.getElementById("number").value);
+			let worthprice = price * 1.0044415;
+			document.getElementById("worthprice").value = worthprice;
+			let fee1 = (price * number * 0.001425) / 2;
+			let fee2 = worthprice * number * (0.001425 / 2 + 0.003);
+			document.getElementById("fee").value = fee1 + fee2;
+			document.getElementById("cost").value =
+				price * number + fee1 + fee2;
+			document.getElementById("income").value = worthprice * number;
+		}
+	</script>
+</html>
