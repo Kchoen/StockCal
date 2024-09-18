@@ -43,13 +43,19 @@
 			<div class="input-group" style="width: 40%">
 				<p>輸入價格：</p>
 				<textarea id="price"></textarea>
+				<p>輸入手續費折數：</p>
+				<textarea id="discount">5</textarea>
+				<p><br /></p>
+				<button onclick="calworthprice()">計算最低獲利價格</button>
 				<p>輸入股數：</p>
 				<textarea id="number"></textarea>
+				<p>輸入賣出價格：</p>
+				<textarea id="sellprice"></textarea>
 				<p><br /></p>
-				<button onclick="cal()">計算手續費</button>
+				<button onclick="calprofit()">計算獲利</button>
 			</div>
 			<div class="output-group">
-				<p>獲利價格：</p>
+				<p>最低獲利價格：</p>
 				<textarea id="worthprice"></textarea>
 				<p>手續費：</p>
 				<textarea id="fee"></textarea>
@@ -57,6 +63,8 @@
 				<textarea id="cost"></textarea>
 				<p>總收入：</p>
 				<textarea id="income"></textarea>
+				<p>淨收益：</p>
+				<textarea id="profit"></textarea>
 			</div>
 		</div>
 
@@ -71,17 +79,35 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     --></body>
 	<script>
-		function cal() {
+		function calworthprice() {
 			let price = parseFloat(document.getElementById("price").value);
 			let number = parseInt(document.getElementById("number").value);
-			let worthprice = price * 1.0044415;
+			let discount = parseFloat(
+				document.getElementById("discount").value
+			);
+			let worthprice =
+				(price * (1 + (0.001425 / 10) * discount)) /
+				(1 - 0.003 - (0.001425 / 10) * discount);
 			document.getElementById("worthprice").value = worthprice;
-			let fee1 = (price * number * 0.001425) / 2;
-			let fee2 = worthprice * number * (0.001425 / 2 + 0.003);
+		}
+		function calprofit() {
+			let price = parseFloat(document.getElementById("price").value);
+			let number = parseInt(document.getElementById("number").value);
+			let discount = parseFloat(
+				document.getElementById("discount").value
+			);
+			let sellprice = parseFloat(
+				document.getElementById("sellprice").value
+			);
+			let fee1 = ((price * number * 0.001425) / 10) * discount;
+			let fee2 =
+				sellprice * number * ((0.001425 / 10) * discount + 0.003);
 			document.getElementById("fee").value = fee1 + fee2;
 			document.getElementById("cost").value =
 				price * number + fee1 + fee2;
-			document.getElementById("income").value = worthprice * number;
+			document.getElementById("income").value = sellprice * number;
+			document.getElementById("profit").value =
+				sellprice * number - (price * number + fee1 + fee2);
 		}
 	</script>
 </html>
